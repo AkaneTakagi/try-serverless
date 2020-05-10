@@ -1,0 +1,19 @@
+<mat-sidenav-container class="main-container">
+    <mat-sidenav #sidenav mode="side" [(opened)]="opened" class="main-sidenav">
+        <mat-action-list>
+            <button mat-list-item routerLink="{{menu}}" routerLinkActive="active" *ngFor="let menu of menus">{{menu | titlecase}}</button>
+            <mat-divider></mat-divider>
+            <button mat-list-item (click)="onLogoutClick()">Logout</button>
+        </mat-action-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <p>
+            <button mat-icon-button (click)="sidenav.toggle()">
+                <mat-icon *ngIf="opened">keyboard_arrow_left</mat-icon>
+                <mat-icon *ngIf="!opened">keyboard_arrow_right</mat-icon>
+            </button>
+        </p>
+        <router-outlet>
+        </router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>

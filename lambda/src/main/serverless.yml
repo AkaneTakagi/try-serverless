@@ -1,0 +1,122 @@
+service:
+  name: serverless-practice
+# app and org for use with dashboard.serverless.com
+#app: your-app-name
+#org: your-org-name
+
+custom:
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules: true
+  outerFile:
+    environment:
+      dev: ${file(./environments/environment.yml)}
+
+# Add the serverless-webpack plugin
+plugins:
+  - serverless-webpack
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  endpointType: REGIONAL
+  region: ap-northeast-1
+  apiGateway:
+    minimumCompressionSize: 1024 # Enable gzip compression for responses > 1 KB
+  environment:
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+
+functions:
+  hello:
+    handler: handler.hello
+    events:
+      - http:
+          method: get
+          path: hello
+
+  getPaciants:
+    handler: function/paciant.list
+    events:
+      - http:
+          method: get
+          path: paciant
+          cors:
+            origin: '*'
+            headers: 
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+    environment:
+      RDB_HOST: ${self:custom.outerFile.environment.${self:provider.stage}.rdb.host}
+      RDB_USER: ${self:custom.outerFile.environment.${self:provider.stage}.rdb.user}
+      RDB_PASSWORD: ${self:custom.outerFile.environment.${self:provider.stage}.rdb.password}
+      RDB_DATABASE: ${self:custom.outerFile.environment.${self:provider.stage}.rdb.database}
+
+  getPaciant:
+    handler: function/paciant.get
+    events:
+      - http:
+          method: get
+          path: paciant/{id}
+          cors:
+            origin: '*'
+            headers: 
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+    environment:
+      RDB_HOST: ${self:custom.outerFile.environment.${self:provider.stage}.rdb.host}
+      RDB_USER: ${self:custom.outerFile.environment.${self:provider.stage}.rdb.user}
+      RDB_PASSWORD: ${self:custom.outerFile.environment.${self:provider.stage}.rdb.password}
+      RDB_DATABASE: ${self:custom.outerFile.environment.${self:provider.stage}.rdb.database}
+
+  modifyPaciant:
+    handler: function/paciant.modify
+    events:
+      - http:
+          method: put
+          path: paciant/{id}
+          cors:
+            origin: '*'
+            headers: 
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+    environment:
+      RDB_HOST: ${self:custom.outerFile.environment.${self:provider.stage}.rdb.host}
+      RDB_USER: ${self:custom.outerFile.environment.${self:provider.stage}.rdb.user}
+      RDB_PASSWORD: ${self:custom.outerFile.environment.${self:provider.stage}.rdb.password}
+      RDB_DATABASE: ${self:custom.outerFile.environment.${self:provider.stage}.rdb.database}
+
+  addPaciant:
+    handler: function/paciant.add
+    events:
+      - http:
+          method: post
+          path: paciant
+          cors:
+            origin: '*'
+            headers: 
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+    environment:
+      RDB_HOST: ${self:custom.outerFile.environment.${self:provider.stage}.rdb.host}
+      RDB_USER: ${self:custom.outerFile.environment.${self:provider.stage}.rdb.user}
+      RDB_PASSWORD: ${self:custom.outerFile.environment.${self:provider.stage}.rdb.password}
+      RDB_DATABASE: ${self:custom.outerFile.environment.${self:provider.stage}.rdb.database}
+      test: hoge
+
+

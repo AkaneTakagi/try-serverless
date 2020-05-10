@@ -1,0 +1,33 @@
+<div class="signup" *ngIf="!successfullySignup">
+    <form class="signup-form" [formGroup]="signupForm" (ngSubmit)="onSubmitSignup(signupForm.value)">
+        <div class="signup-input">
+            <mat-form-field>
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="xxxx@hogehoge.com" type="email" formControlName="email">
+            </mat-form-field>
+        </div>
+        <div class="signup-input">
+            <mat-form-field>
+                <mat-label>Password</mat-label>
+                <input matInput type="password" formControlName="password">
+            </mat-form-field>
+        </div>
+        <div class="signup-input">
+            <button mat-flat-button color="primary" type="submit">Signup</button>
+        </div>
+    </form>
+</div>
+
+<div class="confirmation" *ngIf="successfullySignup">
+    <form [formGroup]="confirmationForm" (ngSubmit)="onSubmitConfirmation(confirmationForm.value)">
+        <div class="confirmation-input">
+            <mat-form-field>
+                <mat-label>Confirmation Code</mat-label>
+                <input matInput formControlName="confirmationCode">
+            </mat-form-field>
+        </div>
+        <div class="confirmation-input">
+            <button mat-flat-button color="primary" type="submit">Confirm</button>
+        </div>
+    </form>
+</div>

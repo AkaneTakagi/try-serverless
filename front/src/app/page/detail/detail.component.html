@@ -1,0 +1,59 @@
+<div class="detail">
+    <form class="detail-form" [formGroup]="detailForm" (ngSubmit)="onDetailSubmit(detailForm.value)">
+        <div class="detail-input">
+            <mat-form-field>
+                <mat-label>ID</mat-label>
+                <input matInput formControlName="id" readonly=true>
+            </mat-form-field>
+        </div>
+        <div class="detail-input">
+            <mat-form-field>
+                <mat-label>氏名</mat-label>
+                <input matInput formControlName="name">
+            </mat-form-field>
+        </div>
+        <div class="detail-input">
+            <mat-form-field>
+                <mat-label>性別</mat-label>
+                <mat-select formControlName="sex">
+                    <mat-option [value]="sex.key" *ngFor="let sex of sexLabel | keyvalue">
+                        {{sex.value}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="detail-input">
+            <mat-form-field>
+                <mat-label>年齢</mat-label>
+                <input matInput type="number" formControlName="age">
+            </mat-form-field>
+        </div>
+        <div class="detail-input">
+            <mat-form-field>
+                <mat-label>検査日</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="testedAt">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="detail-input">
+            <mat-form-field>
+                <mat-label>結果</mat-label>
+                <mat-select formControlName="result">
+                    <mat-option [value]="result.key" *ngFor="let result of resultLabel | keyvalue">
+                        {{result.value}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="detail-input">
+            <mat-form-field>
+                <mat-label>登録者</mat-label>
+                <input matInput formControlName="registeredBy" readonly="true">
+            </mat-form-field>
+        </div>
+        <div class="detail-input">
+            <button mat-flat-button color="primary" type="submit" [attr.disabled]="status != 'VALID' ? true : null">{{mode | titlecase}}</button>
+        </div>
+    </form>
+</div>

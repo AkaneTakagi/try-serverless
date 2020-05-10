@@ -1,0 +1,19 @@
+<div class="dashboard">
+    <div class="chart">
+        <p>検査結果推移</p>
+        <ngx-charts-bar-vertical-stacked
+          [view]="view"
+          [results]="multi"
+          [gradient]="gradient"
+          [xAxis]="showXAxis"
+          [yAxis]="showYAxis"
+          [legend]="showLegend"
+          [showXAxisLabel]="showXAxisLabel"
+          [showYAxisLabel]="showYAxisLabel"
+          [xAxisLabel]="xAxisLabel"
+          [yAxisLabel]="yAxisLabel"
+          [animations]="animations"
+          (select)="onSelect($event)">
+        </ngx-charts-bar-vertical-stacked>
+    </div>
+</div>
